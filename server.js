@@ -6,8 +6,11 @@ const path = require('path')
 const axios = require('axios')
 
     async function getFipe (req,res){
+        var fipeReq = req.query.urlFipe
 
-        if(req.query.veiculo){
+        console.log(fipeReq.solicitacao)
+
+        if(fipeReq.solicitacao == "tipo"){
             const obj_req = req.query.veiculo
             const url_fipe = 'https://fipeapi.appspot.com/api/1/' + obj_req[0] + '/marcas.json'
             const fipe = await axios.get(url_fipe)

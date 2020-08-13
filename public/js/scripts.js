@@ -1,4 +1,4 @@
-var urlFipe = [];
+var urlFipe = new Object();
 
 $(document).ready(function() {
         $("#get-fipe").change(function() {
@@ -7,12 +7,13 @@ $(document).ready(function() {
             if(text_fipe == "Selecione o Tipo do Veiculo:"){
             var tipo = $("#get-fipe").val();
             var buscaMarcas = "fipe_api/";
-            urlFipe.push(tipo)
+            urlFipe.solicitacao = "tipo";
+            urlFipe.tipo = tipo;
             $.ajax({
                 url: buscaMarcas,
                 type: "get",
                 data: {
-                    veiculo: urlFipe
+                    urlFipe
                 },
                 dataType: "json",
                 success: function(data) {
@@ -34,7 +35,8 @@ $(document).ready(function() {
             }else if(text_fipe == "Selecione a Marca do Veiculo:"){
                 var marca = $("#get-fipe").val();
                 var buscaMarcas = "fipe_api/";
-                urlFipe.push(marca)
+                urlFipe.solicitacao = "marca";
+                urlFipe.marca = marca;
                 $.ajax({
                     url: buscaMarcas,
                     type: "get",
@@ -61,7 +63,8 @@ $(document).ready(function() {
             }else if(text_fipe == "Selecione o Modelo do Veiculo:"){
                 var veiculo = $("#get-fipe").val();
                 var buscaMarcas = "fipe_api/";
-                urlFipe.push(veiculo)
+                urlFipe.solicitacao = "modelo";
+                urlFipe.modelo = veiculo;
                 $.ajax({
                     url: buscaMarcas,
                     type: "get",
@@ -88,7 +91,8 @@ $(document).ready(function() {
             }else if(text_fipe == "Selecione o Ano do Veiculo:"){
                 var ano = $("#get-fipe").val();
                 var buscaMarcas = "fipe_api/";
-                urlFipe.push(ano)
+                urlFipe.solicitacao = "ano"
+                urlFipe.ano = ano;
                 $.ajax({
                     url: buscaMarcas,
                     type: "get",
