@@ -4,45 +4,44 @@ const port = 3000
 const fs = require('fs')
 const path = require('path')
 const axios = require('axios')
+const Tipo = require('./fipe/tipo')
+const Marca = require('./fipe/marca')
+const Modelo = require('./fipe/modelo')
+const Ano = require('./fipe/ano')
 
-    async function getFipe (req,res){
-        var fipeReq = req.query.urlFipe
 
-        console.log(fipeReq.solicitacao)
-
-        if(fipeReq.solicitacao == "tipo"){
-            const obj_req = req.query.veiculo
-            const url_fipe = 'https://fipeapi.appspot.com/api/1/' + obj_req[0] + '/marcas.json'
-            const fipe = await axios.get(url_fipe)
-            res.json(fipe.data)
+    app.get('/fipe/tipo', async (req, res) => {
+        try {
+            res.json(await Tipo.fipe(req.query.urlFipe))
+        } catch (error) {
+            res.status(400).send({error: "Search Failed"})
         }
-        if(req.query.marca){
-            const obj_req = req.query.marca
-            const url_fipe = "https://fipeapi.appspot.com/api/1/" + obj_req[0] + "/veiculos/" + obj_req[1] + ".json"
-            const fipe = await axios.get(url_fipe)
-            res.json(fipe.data)
+    })
+   
+    app.get('/fipe/marca', async (req, res) => {
+        try {
+            res.json(await Marca.fipe(req.query.urlFipe))
+        } catch (error) {
+            res.status(400).send({error: "Search Failed"})
         }
-        if(req.query.modelo){
-            const obj_req = req.query.modelo
-            const url_fipe = "https://fipeapi.appspot.com/api/1/" + obj_req[0] + "/veiculo/" + obj_req[1] + "/" + obj_req[2] + ".json"
-            const fipe = await axios.get(url_fipe)
-            res.json(fipe.data)
+    })
+    app.get('/fipe/modelo', async (req, res) => {
+        try {
+            res.json(await Modelo.fipe(req.query.urlFipe))
+        } catch (error) {
+            res.status(400).send({error: "Search Failed"})
         }
-        if(req.query.ano){
-            const obj_req = req.query.ano
-            const url_fipe = "https://fipeapi.appspot.com/api/1/" + obj_req[0] + "/veiculo/" + obj_req[1] +
-            "/" + obj_req[2] + "/" + obj_req[3] + ".json"
-            const fipe = await axios.get(url_fipe)
-            res.json(fipe.data)
+    })
+    app.get('/fipe/ano', async (req, res) => {
+        try {
+            res.json(await Ano.fipe(req.query.urlFipe))
+        } catch (error) {
+            res.status(400).send({error: "Search Failed"})
         }
-
-    }
-        
-    app.get('/fipe_api', getFipe)
-
+    })
     app.get('/cotacao', (req, res) => {
 
-        const filePath = path.join(__dirname, 'public', 'cotacao.html')
+        const filePath = path.join(__dirname, 'web', 'cotacao.html')
 
         
         fs.readFile(
@@ -56,7 +55,7 @@ const axios = require('axios')
     
     })
 
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'web')));
 
     app.listen(port, () => {
         console.log(`Servidor esta rodando !!`)
